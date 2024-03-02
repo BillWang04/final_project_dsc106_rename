@@ -22,30 +22,26 @@ function zoomIn(event, item) {
     event.stopPropagation();
     let x = parseInt(item.attr("x"));
     let y = parseInt(item.attr("y"))
-    console.log(x,y)
-    // console.log(svg.getBBox().width/2,svg.getBBox().height/2)
-    const svgWidth = 650;
-    const svgHeight = 500;
+    const svgWidth = svg.getBoundingClientRect().width;
+    const svgHeight = svg.getBoundingClientRect().height;
 
-    const rectWidth = 100; // Width of the rectangle
-    const rectHeight = 100; // Height of the rectangle
-    const centerX = x + (rectWidth / 2);
-    const centerY = y + rectHeight / 2;
+    const rectWidth = 100 * svgWidth/1040; // Width of the rectangle
+    const rectHeight = 100 * svgHeight/800; // Height of the rectangle
+    const centerX = x * svgWidth/1040 + (rectWidth / 2);
+    const centerY = y * svgHeight/800 + rectHeight / 2;
+    console.log(x,y)
+
     // Calculate the translation needed to center the rectangle
-    const translateX = svgWidth / 2 - centerX;
-    const translateY = svgHeight / 2 - centerY;
+    const translateX = svgWidth / 2 - (centerX * svgWidth/650)
+    const translateY = svgHeight / 2 - (centerY * svgWidth/650)
+
     console.log(svgWidth,svgHeight)
-    console.log(centerX,centerY)
-    console.log(translateX,translateY)
     d3.select(svg).transition()
         .duration(1500)
         .call(zoom.transform,
-        d3.zoomIdentity.translate(svgWidth / 2 - 7 * centerX, svgHeight / 2 - 7 * centerY).scale(7)
+        d3.zoomIdentity.scale(5).translate(translateX,translateY)
     );
-    // d3.select(svg).transition().duration(750).call(
-    //   zoom.transform,
-    //   d3.zoomIdentity.translate(translateX, translateY).scale(2)
-    // );
+
     }
 
     function reset() {
@@ -106,7 +102,7 @@ function zoomIn(event, item) {
         <rect class="position" id="pos-catcher" style="stroke:yellow;fill-opacity:0" width="100" height="100"  x="277.5" y="380" />
         <rect class="position" id="pos-center-field" style="stroke:yellow;fill-opacity:0" width="100" height="100"  x="277.5" y="10" />
         <rect class="position" id="pos-right-field" style="stroke:yellow;fill-opacity:0" width="100" height="100"  x="450" y="50" />
-        <rect class="position" id="pos-right-field" style="stroke:yellow;fill-opacity:0" width="100" height="100"  x="100" y="50" />
+        <rect class="position" id="pos-left-field" style="stroke:yellow;fill-opacity:0" width="100" height="100"  x="100" y="50" />
   
   
   
